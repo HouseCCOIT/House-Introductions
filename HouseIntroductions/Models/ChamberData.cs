@@ -10,7 +10,7 @@ using System.Data.SqlClient;
 using System.Text.RegularExpressions;
 
 
-namespace HouseJournals.Models
+namespace HouseIntroductions.Models
 {
     public class ChamberData
     {
@@ -30,7 +30,7 @@ namespace HouseJournals.Models
 
 
         // Query databse to set object with data.
-        public string CurrentChamberData(HouseJournals.Models.SessionData SessionInfo)
+        public string CurrentChamberData(HouseIntroductions.Models.SessionData SessionInfo)
         {
             string cs = ConfigurationManager.ConnectionStrings["House1"].ConnectionString;
             //string cs = ConfigurationManager.ConnectionStrings["House113"].ConnectionString;

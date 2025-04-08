@@ -4,7 +4,7 @@ using System.Configuration;
 using System.Data.SqlClient;
 
 
-namespace HouseJournals.Models
+namespace HouseIntroductions.Models
 {
     public class SessionData
     {

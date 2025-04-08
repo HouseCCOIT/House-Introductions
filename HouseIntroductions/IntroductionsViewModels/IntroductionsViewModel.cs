@@ -1,7 +1,7 @@
 ﻿using House.DataServices.House1.Models;
 using System.Collections.Generic;
 
-namespace HouseJournals.JournalViewModels
+namespace HouseIntroductions.IntroductionViewModels
 {
     public class IntroductionsViewModel : LayoutViewModel
     {

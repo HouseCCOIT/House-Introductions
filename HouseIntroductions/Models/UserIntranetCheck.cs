@@ -2,7 +2,7 @@
 using System.Web;
 using System.Web.Mvc;
 
-namespace HouseJournals.Models
+namespace HouseIntroductions.Models
 {
     public class UserIntranetCheck : ActionFilterAttribute
     {

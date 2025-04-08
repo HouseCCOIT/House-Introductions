@@ -2,9 +2,9 @@
 using System.Web.Mvc;
 using House.DataAccess.EF.Contexts;
 using House.DataServices.House1.ServicesEF;
-using HouseJournals.Models;
+using HouseIntroductions.Models;
 
-namespace HouseJournals.Controllers
+namespace HouseIntroductions.Controllers
 {
     public class IntroductionsController : Controller
     {
@@ -38,7 +38,7 @@ namespace HouseJournals.Controllers
                 
 
             //Instantiate Journal View Model.
-            var ViewModel = new JournalViewModels.IntroductionsViewModel();
+            var ViewModel = new IntroductionViewModels.IntroductionsViewModel();
 
             // Set values for ViewModel objects.
             ViewModel.ActiveSession = journalData.GetActiveSession(SessionKey);

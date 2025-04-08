@@ -1,4 +1,4 @@
-﻿namespace HouseJournals.JournalViewModels
+﻿namespace HouseIntroductions.IntroductionViewModels
 {
     public class LayoutViewModel
     {

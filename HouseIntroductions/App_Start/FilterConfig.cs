@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace HouseJournals
+namespace HouseIntroductions
 {
     public class FilterConfig
     {

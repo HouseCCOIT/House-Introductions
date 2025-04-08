@@ -1,6 +1,6 @@
 ﻿using System.Web.Http;
 
-namespace HouseJournals
+namespace HouseIntroductions
 {
     public static class WebApiConfig
     {
