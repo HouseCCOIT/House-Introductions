@@ -1,0 +1,13 @@
+﻿.AnnouncementHeader
+{
+    float: left;
+    padding: 4px 12px 8px 5px;
+    font-size: 1.025em;
+    font-weight: normal;
+}
+
+    .AnnouncementHeader a 
+    {
+        color: #346F9A;
+        text-decoration:underline;
+    }

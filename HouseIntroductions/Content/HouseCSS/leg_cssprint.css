@@ -1,0 +1,45 @@
+﻿/* Common legislature CSS - for print
+ *
+ * Utility classes:
+ *      leg_HiddenPrint                                 - do not show when printing
+ */
+
+/* =========================== Hidden Portions =========================== */
+.leg_FirstNav, .leg_mobile_TopHeader, .leg_LegNav, .leg_mobile_NavHeader, .leg_OfficeNav, .leg_PageFooter, .leg_PageFooterAddr {
+    display:none;
+  }
+
+.leg_HiddenPrint, .leg_Crumbs {
+    display:none;
+}
+.leg_print100 {
+    width:100%;
+}
+.leg_printbreakword {
+    word-wrap:break-word;
+}
+.leg_print_font9 {
+font-size:.9em;
+}
+
+/* =========================== Misc Adjustments =========================== */
+body {
+    font-size:100%;
+}
+
+.leg_Masthead {
+    border:none;
+    height:auto;
+    margin-bottom:0.5em;
+}
+.leg_Banner {
+    background-image:none;
+}
+.leg_Banner .leg_MainTitle, .leg_Banner .leg_SubTitle {
+    text-align:center;
+    padding-top:0;
+    padding-left:0;
+}
+.time_divider {
+    width:340px;
+}

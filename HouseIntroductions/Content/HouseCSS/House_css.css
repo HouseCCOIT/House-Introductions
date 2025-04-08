@@ -1,0 +1,1804 @@
+﻿/* Common legislature CSS
+ *
+ * Basic structure of css classes: 
+ * leg_mobile_TopHeader                                         - mobile-specific; topmost heading
+ * leg_Shell                                                    - defines area of screen used
+ *      leg_PageHeader                                          - standard header
+ *          leg_FirstNav                                        - first set of nav links
+ *          leg_mobile_TopHeader                                - mobile-specific; heading for legislature-level navigation
+ *          leg_LegNav                                          - legislative-level navigation
+ *              leg_NavItem                                     - class for each <li> within a <ul> for legislature-level navigation
+ *                  leg_LegNavTop                               - each top level legislative nav link
+ *                  Leg_LegNavCore                              - each corresponding "drop-down" (over banner/title) for an legistive nav link
+ *          leg_Masthead                                        - title, /Content/HouseCSS/templates/graphics, and navigation space
+ *              leg_Banner                                      - banner, main /Content/HouseCSS/templates/graphics
+ *              leg_MainTitle / leg_SubTitle                    - location title(s)
+ *          leg_mobile_NavHeader                                - mobile-specific; heading for office-level navigation 
+ *          leg_OfficeNav                                       - office-level navigation
+ *              leg_NavItem                                     - class for each <li> within a <ul> for office-level navigation
+ *                  leg_OfficeNavTop                            - each top level office nav link
+ *                  Leg_OfficeNavCore                           - each corresponding "drop-down" for an office nav link
+ *      leg_PageContent                                         - actual content specific to the page
+ *      leg_PageFooter                                          - footer information
+ *      leg_PageFooterAddr
+ *
+ * Possible office-specific modifications to this file:
+ *      1) office-specific colors requires search and replace
+ *          House: #666633 - core green, #424211 - accent green (for borders around elements filled in with core office/body color)
+ *          Senate: #3353bb - core blue, #3353bb - accent blue (for borders around elements filled in with core office/body color)
+ *          Leg general: #990033 - core red, #540902 - accent red (for borders around elements filled in with core office/body color)
+ *      2) paths to images are by default in a "/Content/HouseCSS/templates/graphics" directory under the css file location
+ *
+ * Misc. comments:
+ *      "mobile" refers to small screen handheld devices, not all mobile devices
+ *      common colors: #E8E8E8 - lt grey for backgrounds (e.g., drop-downs), #353535 - near black for headings & header/footer links,
+ *          #FFFEE9 - yellow off-white footer background, #9E9E9E - shadows
+ *      for columns, see documentation below
+ *
+ * Naming conventions:
+ *      "leg_"                                                  - legislative css prefix, for legislature-wide core styles
+ *      "mobile_"                                               - mobile-only css prefix (implicitly hidden in full screen view)
+ *      "_Hover", "_Expanded"                                   - temporary style suffix, for drop-downs or expanded through script
+ *
+ * General & utility classes:
+ *      leg_Offscreen                                           - shift out of display view
+ *      leg_Hidden                                              - hide element completely
+ *      leg_Crumbs                                              - breadcrumbs links
+ *      leg_IsLink                                              - to treat element as a live link (i.e., no href but still want link cursor)
+ *      leg_HiddenMobile                                        - hide for mobile, show in fullscreen
+ *      leg_HiddenNonmobile                                     - hide for fullscreen display, show in mobile
+ *      leg_HiddenTablet                                        - hide for tablet & mobile, show in fullscreen
+ *      leg_Social*                                             - (multiple styles) social media & related /Content/HouseCSS/templates/graphics
+ *      leg_Print                                               - printer graphic
+ *      leg_Col, leg_ColR                                       - floated columns (no further properties)
+ *      leg_ColClear, leg_ColClearL, leg_ColClearR              - clear floats: all, left only, right only
+ *      leg_Highlight                                           - underlining
+ *      leg_Heading                                             - bolding
+ *      leg_Title                                               - centering
+ *      leg_AlignR                                              - right text align
+ *      leg_SpacingMini, leg_SpacingSm, 
+ *          leg_SpacingMed, leg_SpacingLg                       - spacing after the element 
+ *      leg_mobile_Newline                                      - mobile-specific; add spacing for single-column display in mobile
+ *      leg_UseMobile                                           - wrapper class to conditionally add in mobile display styling (added through script)
+ *      leg_IEOld                                               - wrapper class automatically added to handle hacks for <= IE7
+ */
+
+/* =========================== Initial Resets =========================== */
+
+a, abbr, address, acronym, blockquote, body, caption, dd, div, dl, dt, em, fieldset, 
+h1, h2, h3, h4, h5, h6, html, img, label, legend, li,
+ol, p, pre, s, span, strike, table, tbody, tfoot, thead, tr, th, td, ul, var {
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;  
+    font-style:inherit;
+    font-variant:normal;
+    font-size:100%;
+    font-weight:inherit;
+    font-family:inherit;
+    vertical-align:baseline;
+}
+button, form, input, optgroup, textarea {
+    margin:0;
+    padding:0;
+    font-style:inherit;
+    font-variant:normal;
+    font-size:100%;
+    font-weight:inherit;
+    font-family:inherit;
+    vertical-align:baseline;
+}
+h1, h2, h3, h4, h5, h6, th {
+    font-weight: bold;
+}
+small {
+    font-size:0.8em;
+}
+table {
+    border-collapse:collapse;
+    border-spacing:0;
+}
+em {
+    font-style:italic;
+}
+
+
+/* =========================== Page-Level =========================== */
+
+body {
+    background-color:#ffffff;
+    font-size:84%;
+    text-align:left;
+    line-height:1;
+}
+
+.leg_Shell {                                                /* entire page content area - inside "gutters" */
+    /*width:980px;*/
+    width: 1200px;
+    margin:0 auto;
+    padding:0 10px;
+    font-family:verdana, arial, Sans-Serif;   
+}
+
+/* --------------------------- utilities: general --------------------------- */
+
+.leg_Offscreen {
+    position:absolute;    
+    left:-4000px;
+}
+.leg_Offscreen a:active, .leg_Offscreen a:focus {
+    position:absolute;    
+    left:4020px;
+    min-width:90px;
+    top:5px;
+    padding:4px;
+    border: dotted 1px black;
+    z-index:900;
+    background-color:#FFFED0;
+}
+.leg_Hidden {                                                                   /* elements not displayed */
+    display:none;
+    visibility:hidden;
+}
+
+.leg_ButtonSearch {
+    width:20px;
+    height:20px;
+    background:transparent url(/Content/HouseCSS/Templates/graphics/icon_search.png) no-repeat;
+    line-height:0;
+    overflow:hidden;
+    border:none;
+    cursor:pointer;
+    text-indent:-10000px;
+}
+
+p.leg_Crumbs {
+    margin-top:-1.5em;
+    padding-bottom:0.3em;
+    color:#404040;
+}
+p.leg_Crumbs a {
+    color:#404040;
+    font-size:0.8em;
+}
+
+a.leg_IsLink:hover {    
+    text-decoration:underline;
+    cursor:pointer;
+}
+
+/* =========================== Header: Common Banner & Legislative Navigation =========================== */
+
+.leg_NavItem {                                           
+   float:left;
+}
+
+/* --------------------------- header general setup --------------------------- */
+
+.leg_PageHeader {                                           /* wrapper around entire header section of page */
+    font-family:Helvetica, Tahoma, Serif;
+    margin-top:2px;
+}
+.leg_PageHeader a {
+    color:#000;
+    text-decoration:none;
+}
+.leg_PageHeader a:hover {
+    text-decoration:underline;
+}
+
+.leg_PageHeader ul, .leg_PageHeader li {
+    list-style:none outside none;
+}
+
+.leg_PageHeader input { 
+    color:#353535;
+    font-style:italic;
+    font-size:1.1em;
+}
+
+/* --------------------------- first navigational links --------------------------- */
+
+.leg_FirstNav {                                             /* wrapper around first row/set of common navigation links */ 
+    height:30px;
+    overflow:hidden;
+    padding-top:5px;
+    font-size:0.9em;
+}
+.leg_FirstNav li {
+    float:left;
+    padding-right:2%;
+}
+.leg_FirstNav li:first-child {
+    padding-left:6px;
+}
+
+.leg_FirstNav a {    
+    display:block;
+    height:20px; 
+    padding-top:5px;
+    padding-left:24px;                                      /* accommodate 20px x 20px image */
+    color:#353535;
+    background-repeat:no-repeat;
+    background-size:20px 20px;
+    background-position:0 0;
+}
+.leg_FirstNav a:focus {
+    text-decoration:underline;    
+    background-color:#FFFED0;    
+    border-top:1px dotted;
+    border-bottom:1px dotted;
+    padding-top:4px;
+}
+.leg_FirstNav .leg_IconLeg {
+    background-image:url(/Content/HouseCSS/templates/graphics/icon_cap.png);
+}
+.leg_FirstNav .leg_IconConn {
+    background-image:url(/Content/HouseCSS/templates/graphics/icon_social.png);
+}
+.leg_FirstNav .leg_IconAbout {
+    background-image:url(/Content/HouseCSS/templates/graphics/icon_info.png);
+}
+.leg_FirstNav .leg_IconMobile {
+    background-image:url(/Content/HouseCSS/templates/graphics/icon_mobile.png);
+    cursor:pointer;
+}
+
+.leg_FirstNavR { 
+    float:right;
+    padding-right:6px;
+    padding-left:6px; 
+}
+
+/* --------------------------- leg navigation - top-level links --------------------------- */
+
+.leg_LegNav {                                               /* wrapper around common legislative navigation links */
+    position:relative;
+    clear:both;
+    height:27px; 
+    padding-top:4px;                                        /* setup space for 'index tab' effect */
+    background-color:#666633;
+    border-top:2px solid #424211;
+    border-right:1px solid #424211;
+    border-bottom:1px solid #424211;
+    border-left:1px solid #424211;
+    /*border-top-right-radius:3px;
+	-moz-border-radius-topright:5px;
+	-webkit-border-top-right-radius:3px;
+    border-top-left-radius:3px;
+	-moz-border-radius-topleft:5px;
+	-webkit-border-top-left-radius:3px;
+	box-shadow:0 -2px 2px -1px #9E9E9E;
+    -moz-box-shadow:0 -2px 2px -1px #9E9E9E;
+    -webkit-box-shadow:0 -2px 2px -1px #9E9E9E;*/
+}
+
+.leg_LegNav ul {    
+    padding-left:0.75%;        
+}
+
+.leg_LegNav li {
+    padding-right:0.75%;
+    padding-left:0.75%;
+}
+
+a.leg_LegNavTop {                                           /* each top-level link */
+    float:left;
+    padding:4px 5px 8px 5px;
+    font-size:1.2em;
+    font-weight:bold;
+    color:#ffffff;
+}
+
+a.leg_LegNavTop_Hover {                                     /* temporarily applied during a mouse hover or touch click */
+    padding:3px 4px 7px 4px;                                /* reduce padding to account for added 1px border */                           
+    color:#000000;
+    background-color:#E8E8E8;
+    border-top:1px solid #424211;  
+    border-right:1px solid #424211;
+    border-bottom:1px solid #E8E8E8;                        /* added border colored bottom over .leg_LegNav line for 'index tab' flow into banner */
+    border-left:1px solid #424211;                          
+    border-top-left-radius:3px;
+    -moz-border-radius-topleft:3px;
+	-webkit-border-top-left-radius:3px;
+    border-top-right-radius:3px;
+	-moz-border-radius-topright:3px;
+	-webkit-border-top-right-radius:3px;
+}
+
+/* --------------------------- leg navigation - core links for each body/nav area --------------------------- */
+
+.leg_LegNavCore {
+    float:left;
+    position:absolute;
+    overflow:hidden;
+    width:100%;
+    top:32px;
+    height:140px;    	
+	left:-4000px;                                           /* shifted offscreen to start, moved over with script */
+    background-color:#E8E8E8;
+    border-right:1px solid #424211; 
+    border-bottom:2px solid #424211;
+    border-left:1px solid #424211;
+}
+
+.leg_LegNavCore h2 {                                        /* top-level nav header */
+    font-size:1.2em;
+    padding:2px 0 4px 8px;
+}
+
+.leg_LegNavCore ul {                                        /* links "column" */
+	float:left;
+	width:24.75%;	                                        /* for IE7 column wrapping */
+    padding-left:0;
+}
+.leg_LegNavCore ul.leg_NavCol2of4 {                         /* 2-column layout */
+	width:49.75%;
+}
+.leg_LegNavCore ul.leg_NavCol1of3 {                         /* 3-column layout */
+	width:33.25%;	
+}
+.leg_LegNavCore ul li h3 {                                  /* links "column" header */
+	padding:0 0 3px 0;
+	font-size:1.1em;
+	border-top:none;
+}
+.leg_LegNavCore ul li  {                                    /* each link for the body/area */
+	display:block;
+	padding:1px 0 1px 8px;
+	margin:0;	
+	font-size:0.9em;
+}
+
+/* =========================== Masthead: body/office location title & /Content/HouseCSS/templates/graphics =========================== */
+
+.leg_Masthead {                                             /* wrapper for banner and title area */
+    clear:both;
+    height:140px;
+    overflow:hidden;
+    border-left:1px solid #424211;
+    border-right:1px solid #424211; 
+    display:block;
+    box-shadow:inset 0 0 6px 2px #9E9E9E;
+    -moz-box-shadow:inset 0 0 6px 2px #9E9E9E;
+    -webkit-box-shadow:inset 0 0 6px 2px #9E9E9E; 
+}
+
+.leg_Banner {
+    height:100%;
+
+    /*background-image:url(/Content/HouseCSS/templates/graphics/Banner_hardedge_bleedright_narrow.jpg);*/
+    background-image:url(/Content/HouseCSS/templates/graphics/Banner_1198x140_4.jpg);
+    background-repeat:no-repeat;
+    font-family:georgia,serif;
+    z-index:1;
+}
+.leg_Banner a {
+    color:#000000;
+}
+.leg_Banner a:hover {
+    text-decoration:none;
+}
+.leg_Banner .leg_MainTitle {
+    font-size:2.65em;
+    letter-spacing:0.05em;
+    padding:28px 0 14px 250px ;
+    display:block;
+    z-index:9;                                              /* place over banner image */
+}
+.leg_Banner .leg_SubTitle {
+    font-size:1.8em;
+    letter-spacing:0.05em;
+    padding: 0 0 0 290px;
+    display:block;
+    z-index:9;                                              /* place over banner image */
+}
+
+
+/* =========================== Office Nav: contextual & dynamic body/office links, news, info =========================== */
+
+
+.leg_SocialFB, .leg_SocialTwitter, .leg_SocialYoutube, .leg_SocialEmail, .leg_SocialRSS, .leg_Print {    /* get connected & other small icon links - can be used within office nav or page content */
+    display:inline;
+    float:right;
+    height:16px;   
+    margin-top:2px;
+    padding-right:2px;
+    padding-left:18px;
+    background-repeat:no-repeat;
+    background-size:16px 16px;
+    background-position:0 0;
+}
+.leg_SocialFB {
+    background-image:url(/Content/HouseCSS/templates/graphics/icon_sm_facebook.png);
+}
+.leg_SocialTwitter {
+    background-image:url(/Content/HouseCSS/templates/graphics/icon_sm_twitter.png);
+}
+.leg_SocialYoutube {
+    background-image:url(/Content/HouseCSS/templates/graphics/icon_sm_youtube.png);
+}
+.leg_SocialEmail {
+    background-image:url(/Content/HouseCSS/templates/graphics/icon_sm_email.png);
+}
+.leg_SocialRSS {
+    background-image:url(/Content/HouseCSS/templates/graphics/icon_sm_rss.png);
+}
+.leg_Print {                                                
+    background-image:url(/Content/HouseCSS/templates/graphics/icon_sm_printer.png);
+}
+a.leg_Print:hover {
+    cursor:pointer;
+}
+
+.leg_OfficeNav {                                            /* wrapper around office-level navigation & info */
+    clear:both;
+    position:relative;
+    height:26px;    
+    padding-top:6px;
+    border-top:2px solid #424211; 
+    border-bottom:2px solid #424211;     
+    /*box-shadow:0 2px 2px -1px #9E9E9E;
+    -moz-box-shadow:0 2px 2px -1px #9E9E9E;
+    -webkit-box-shadow:0 2px 2px -1px #9E9E9E;*/
+    z-index:1;                                              /* added to get IE7 stacking order to work */    
+}
+.leg_OfficeNav > a:focus {
+    border:1px dotted;
+}
+.leg_OfficeNav .leg_NavItem {                                           
+   position:relative;                                       /* setup leg_OfficeNavCore positioning */
+}
+
+.leg_OfficeNav select {
+    margin-top:1px;
+    margin-right:12px;
+    margin-left:6px;
+    font-size:1.025em;
+}
+
+.leg_OfficeNav input {
+    font-size:1.025em;    
+    font-weight:normal;
+}
+
+.leg_OfficeNav p {
+    padding:4px 6px 8px 0;
+    font-size:1.025em;    
+}
+
+.leg_OfficeNav li {    
+    padding-right:0.5%;
+}
+
+a.leg_OfficeNavTop, 
+a.leg_OfficeNavLinkonly {                                   /* Linkonly class is for office nav items with no drop-down menu to be shown */
+    float:left;
+    padding:4px 12px 8px 5px;
+    font-size:1.025em;
+    font-weight:normal;
+}
+a.leg_OfficeNavTop {
+    margin-right:8px;
+    background:url(/Content/HouseCSS/templates/graphics/arrow_dropdown.png) no-repeat 100% 35%;
+}
+a.leg_OfficeNavLinkonly:focus {
+   text-decoration:underline;    
+   background-color:#FFFED0;    
+   border-top:1px dotted;
+   border-bottom:1px dotted;
+	   padding-top:3px;
+   padding-bottom:4px;
+}
+a.leg_OfficeNavTop_Hover {                                  /* temporarily applied during a mouse hover or touch click */   
+    padding:3px 11px 8px 4px;                               /* modify padding to account for added 'tab' view border */
+    background-color:#E8E8E8;
+    border-top:1px solid #424211;   
+    border-right:1px solid #424211;    
+    border-bottom:2px solid #E8E8E8;                        /* covers colored bottom .leg_OfficeNav line for 'index card/tab' flow into banner */
+    border-left:1px solid #424211;  
+    border-top-left-radius:3px;
+    -moz-border-radius-topleft:3px;
+	-webkit-border-top-left-radius:3px;
+    border-top-right-radius:3px;
+	-moz-border-radius-topright:3px;
+	-webkit-border-top-right-radius:3px;
+	background-image:none;
+}
+
+.leg_OfficeNavCore {                                        /* drop-down for office nav link */
+    float:left;
+    position:absolute;                                      /* positioning is against leg_NavItem */
+    display:block;        
+    top:28px;
+    left:0;
+    margin-left:-4000px;                                    /* shifted offscreen to start, moved over through javascript */
+    width:250px;                                            /* office override if needed to resize drop-down area */
+    height:auto;                                            /* office override if needed to resize drop-down area */	
+    padding-bottom:8px;
+    background-color:#E8E8E8;
+    border-right:1px solid #424211;
+    border-bottom:1px solid #424211;
+    border-left:1px solid #424211;
+	z-index:1090;
+}
+
+.leg_OfficeNavCore h4 {                                     /* header within a drop-down */
+	padding-bottom:3px;
+	font-size:1em;
+	font-weight:bold;
+}
+
+.leg_OfficeNavCore a:hover  {                               /* each link for the body/area */
+	text-decoration:underline;
+}
+
+.leg_OfficeNavCore ul {                                     	
+	padding:10px 10px 0 10px;
+}
+.leg_OfficeNavCore ul.leg_NavCol2of4 {
+	width:50%;	
+}
+.leg_OfficeNavCore ul li  {                                 /* each link within drop-down */
+	display:block;
+	padding-top:1px;
+	padding-bottom:1px;
+}
+
+
+/* =========================== Body of page: main content =========================== */
+
+.leg_PageContent {
+    width:100%;                                             /* fill available space; no padding/margins */
+    overflow:hidden;
+    position:relative;
+    padding-top:1.8em;
+    min-height: 350px;
+    height: auto !important;
+    height: 350px;
+}
+
+/* --------------------------- Headers --------------------------- */
+
+.leg_PageContent h1 {
+    padding-top:0;
+    padding-bottom:0.2em;
+    margin-bottom:0.5em;
+    font-size:1.75em;
+    font-family:georgia,serif;
+    color:#353535;    
+}
+.leg_PageContent h2, 
+.leg_PageContent h3, 
+.leg_PageContent h4 {
+    padding-top:0.6em;
+    padding-bottom:0.2em;
+    margin-bottom:0.3em;
+    font-family:georgia,serif;
+    color:#353535;
+}
+.leg_PageContent h2 {          
+    font-size:1.4em;
+}
+.leg_PageContent h3 {
+    font-size:1.2em;
+}
+.leg_PageContent h4 {
+    font-size:1em;
+}
+
+.leg_PageContent h1+h2, .leg_PageContent h1+h3, .leg_PageContent h1+h4 {
+    padding-top:0.25em;
+}
+
+.leg_PageContent h1+div > h2:first-child, 
+.leg_PageContent h1+div > h3:first-child, 
+.leg_PageContent h1+div > h4:first-child {
+    padding-top:0em;                                        /* presumed multi-column here - no top padding, to align with other columns */
+}
+
+/* --------------------------- Core elements --------------------------- */
+
+.leg_PageContent a {
+    color:#346F9A;
+    text-decoration:none;
+}
+.leg_PageContent a:hover {
+    text-decoration:underline;
+}
+.leg_PageContent a:focus {
+    text-decoration:underline;    
+    background-color:#FFFED0;    
+    border-top:1px dotted;
+    border-bottom:1px dotted;
+}
+
+.leg_PageContent p a, .leg_PageContent li a {   		 
+text-decoration: underline;   		 
+}   		 
+.leg_PageContent p a:hover, .leg_PageContent li a:hover {   		 
+background-color:#FFFED0;   		 
+}   		 
+.leg_PageContent p a:focus, .leg_PageContent li a:focus {   		 
+text-decoration: none;   		 
+background-color:#FFFED0;       		 
+border-top:1px dotted;   		 
+border-bottom:1px dotted;   		 
+}  
+
+.leg_PageContent p {
+    line-height:1.25em;
+    margin-bottom:1em;
+}
+
+.leg_PageContent ul, .leg_PageContent ol {
+    padding-bottom:1em;
+    margin-left:3em;
+}
+
+.leg_PageContent li {
+    padding-left:4px;
+    line-height:1.3em;
+}
+
+.leg_PageContent ul ul {
+    padding-bottom:0;
+}
+
+.leg_PageContent input {
+    margin-right:0.25em;
+    margin-bottom:0.5em;
+}
+
+.leg_PageContent hr {
+    height:2px;
+    border-width:0;
+    color:#E0E0E0;
+    background-color:#E0E0E0;
+}
+
+/* --------------------------- Columns & Floats --------------------------- */
+/* Core column management styles
+ *      -handles spacing between columns
+ * Column naming convention:
+ *      "leg_ColXofY"
+ *          X (first number)    = how many spaces/slots this column takes up
+ *          Y (second number)   = total number of column spaces/slots
+ *      "-First"                = left most column
+ *      "-Last"                 = right most column
+ * Examples:
+ *      leg_Col3of4-First, leg_Col1of4-Last                     - creates a three quarters/one quarter layout
+ *      leg_Col2of4-First, leg_Col2of4-Last                     - half and half; creates two equal-width columns
+ *      leg_Col1of3-First, leg_Col1of3, legCol1of3-Last         - thirds; creates three equal-width columns
+ */
+ 
+.leg_Col {
+    float:left;
+}
+.leg_ColR {
+    float:right;
+}
+
+.leg_ColClear {
+    clear:both;
+}
+.leg_ColClearL {
+    clear:left;
+}
+.leg_ColClearR {
+    clear:right;
+}
+
+/* ----- 2- or 4-column layouts: quarters, halves ----- */
+.leg_Col1of4-First {
+    float:left;
+    width:23%;
+    padding-right:2%;
+}
+.leg_Col2of4-First {
+    float:left;
+    width:48%;
+    padding-right:2%;
+}
+.leg_Col3of4-First {
+    float:left;
+    width:73%;
+    padding-right:2%;
+}
+
+.leg_Col1of4 {
+    float:left;
+    width:21%;
+    padding-left:2%;
+    padding-right:2%;
+}
+.leg_Col2of4 {
+    float:left;
+    width:46%;
+    padding-left:2%;
+    padding-right:2%;
+}
+.leg_Col3of4 {
+    float:left;
+    width:71%;
+    padding-left:2%;
+    padding-right:2%;
+}
+
+.leg_Col1of4-Last {
+    float:left;
+    width:23%;
+    padding-left:2%;
+}
+.leg_Col2of4-Last {
+    float:left;
+    width:48%;
+    padding-left:2%;
+}
+.leg_Col3of4-Last {
+    float:left;
+    width:73%;
+    padding-left:2%;
+}
+
+/* ----- 3-column layouts: one-third, two-thirds ----- */
+.leg_Col1of3-First {
+    float:left;
+    width:31.33%;
+    padding-right:2%;
+}
+.leg_Col2of3-First {
+    float:left;
+    width:64.66%;
+    padding-right:2%;
+}
+.leg_Col1of3 {
+    float:left;
+    width:29.33%;
+    padding-left:2%;
+    padding-right:2%;
+}
+.leg_Col1of3-Last {
+    float:left;
+    width:31.33%;
+    padding-left:2%;
+}
+.leg_Col2of3-Last {
+    float:left;
+    width:64.66%;
+    padding-left:2%;
+}
+
+/* --------------------------- HACKS: IE7 columns --------------------------- */
+
+.leg_IEOld .leg_Col1of4, .leg_IEOld .leg_Col2of4, .leg_IEOld .leg_Col3of4, 
+.leg_IEOld .leg_Col1of3, .leg_IEOld .leg_Col2of3 {
+    padding-left:1.99%;
+    padding-right:1.99%;
+}
+.leg_IEOld .leg_Col1of4-First, .leg_IEOld .leg_Col2of4-First, .leg_IEOld .leg_Col3of4-First, 
+.leg_IEOld .leg_Col1of3-First, .leg_IEOld .leg_Col2of3-First 
+{
+    padding-right:1.98%;
+}
+.leg_IEOld .leg_Col1of4-Last, .leg_IEOld .leg_Col2of4-Last, .leg_IEOld .leg_Col3of4-Last, 
+.leg_IEOld .leg_Col1of3-Last, .leg_IEOld .leg_Col2of3-Last {
+    padding-left:1.98%;
+}
+
+/* --------------------------- Panes: emphasized content block --------------------------- */
+
+.leg_Pane {                                                      /* main wrapper for pane material */  
+    padding-bottom:0.8em;
+    margin-top:0.2em;
+    margin-bottom:2em;    
+    border-bottom:1px solid #424211;
+}
+
+
+.leg_PaneHeader {
+    padding-left:8px;
+    padding-right:8px;
+    padding-top:0.4em;
+    padding-bottom:0.4em;    
+    margin-bottom:0.4em;
+    color:#ffffff;
+    background-color:#666633;
+    font-family:georgia,serif;
+    font-weight:bold;
+    letter-spacing:0.065em;
+    border-top:1px solid #424211;
+    border-bottom:1px solid #424211;
+    border-left:1px solid #424211;
+    border-right:1px solid #424211;
+}
+
+
+.leg_PaneHeader a {
+    color:#ffffff;
+    text-decoration:underline;
+}
+.leg_PaneHeader a:focus {
+    color: #346F9A;  
+}
+.leg_PageContent .leg_PaneContent h3 {
+    position:relative;
+    padding-top:8px;
+    padding-left:8px;
+    padding-right:8px;
+}
+
+.leg_PageContent .leg_PaneContent ul {
+    padding:0 16px 0 16px;
+    margin-left:0;
+}
+
+.leg_PageContent .leg_PaneContent li {
+    padding-top:6px;
+    padding-bottom:6px;
+    border-bottom:1px solid #E0E0E0;
+    line-height:1.1em;
+    list-style-type:none;
+}
+
+.leg_PaneContent li:last-child {
+    border-bottom:none;
+}
+
+/* --------------------------- Utilities: formatting --------------------------- */
+
+.leg_PageContent .leg_Highlight {    
+    border-bottom:1px solid #666633;
+}
+.leg_PageContent h1.leg_Highlight {    
+    border-bottom:2px solid #666633;
+}
+
+.leg_PageContent .leg_Heading {
+    font-weight:bold;
+}
+
+.leg_PageContent .leg_Title {
+    text-align:center;
+}
+
+.leg_PageContent .leg_AlignR,
+.leg_PageFooter .leg_AlignR {
+    text-align:right;
+}
+
+.leg_PageContent .leg_AlignL,
+.leg_PageFooter .leg_AlignL {
+    text-align:left;
+}
+
+.leg_PageContent .leg_SpacingMini {
+    margin-bottom:0.25em;
+}
+
+.leg_PageContent .leg_SpacingSm {
+    margin-bottom:0.75em;
+}
+
+.leg_PageContent .leg_SpacingMed {
+    margin-bottom:1em;
+}
+
+.leg_PageContent .leg_SpacingLg {
+    margin-bottom:1.75em;
+}
+
+
+/* =========================== Footer =========================== */
+
+.leg_PageFooter {
+    clear:both;
+    width:auto;
+    height:auto;
+    overflow:hidden;
+    padding:12px 12px 8px 12px;
+    margin:2em 0 0 0;        
+    background-color:#FFFEE9;                               /* yellow off-white */
+  	font-family:Helvetica, Tahoma, Serif;
+    border-top:1px solid #424211;
+    border-left:1px solid #424211;
+    border-right:1px solid #424211;
+}
+
+.leg_PageFooter .leg_Title {
+    text-align:center;
+}
+.leg_PageFooter h2 {
+    text-transform:uppercase;    
+    padding:0 0 4px 0;
+    color:#353535;    
+    border-bottom:1px solid #E0E0E0;
+}
+.leg_PageFooter p {
+    padding-bottom:4px;
+    margin-bottom:0px;
+}
+.leg_PageFooter a {
+    text-decoration:none;
+    color:#353535;
+}
+.leg_PageFooter a:hover {
+    text-decoration:underline;
+}
+.leg_PageFooter a:focus {
+    text-decoration:underline; 
+    background-color:#BFBFAA;    
+}
+.leg_PageFooter ul, .leg_PageFooter li {
+    list-style:none outside none;
+}
+.leg_PageFooter ul {
+    padding-top:8px;
+}
+.leg_PageFooter ul li {
+    padding-top:1px;
+    padding-bottom:1px;
+    font-size:0.9em;
+    color:#353535;
+}
+.leg_PageFooter ul li h2 {
+    padding-bottom:4px;
+    text-transform:none;
+    border-bottom:none;
+}
+
+.leg_PageFooterAddr {
+    display:block;
+    float:none;
+    padding-top:4px;
+    padding-bottom:4px;
+    border:1px solid #424211;
+    color:White;
+    background-color:#666633;
+    font-size:0.9em;
+    font-family:Helvetica, Tahoma, Serif;
+    text-align:center;        
+}
+
+.leg_PageFooterAddr a {
+    text-decoration:none;
+    color:White;
+}
+.leg_PageFooterAddr a:hover {
+    text-decoration:underline;
+}
+.leg_PageFooterAddr a:focus {
+   text-decoration:underline;
+   background-color:#BFBFAA;
+   color: #353535;    
+}
+/* =========================== Handle Tablets & Mobile =========================== */
+
+/* --------------------------- Setup for non-mobile display --------------------------- */
+
+.leg_ViewFull {
+    cursor:pointer;
+}
+
+.leg_HiddenNonmobile {                                      /* elements only displayed in mobile */
+    display:none;
+    visibility:hidden;
+}
+
+.leg_mobile_Accordion {
+    display:none;
+    visibility:hidden;
+}
+.leg_mobile_TopHeader, .leg_mobile_NavHeader {              /* hide mobile-only elements */
+    display:none;
+    visibility:hidden;
+}  
+
+/* --------------------------- Adjusted layout for tablet --------------------------- */
+/* overrides some classes to, essentially, shrink to width of device and condense some spacing */
+
+@media screen and (min-width: 481px) and (max-width: 990px) and (max-device-width: 1024px) and (orientation: portrait) {
+
+    .leg_HiddenTablet {                                     /* elements only displayed in full screen */
+        display:none;
+        visibility:hidden;
+    }
+
+    .leg_Shell { 
+        width:auto;
+        padding:0 1% 0 1%;
+    }   
+   
+    .leg_LegNav li {
+        padding-right:0.5%;
+        padding-left:0.25%;
+    }
+    
+    a.leg_LegNavTop {
+        font-size:1.05em;
+    }
+    
+    a.leg_LegNavTop_Hover {
+        padding-bottom:9px;
+    }
+    
+    .leg_LegNavCore h2 {                                        /* top-level nav header */
+        font-size:1.05em;
+    }
+    .leg_LegNavCore ul {
+        padding-left:0;    
+    }
+    .leg_LegNavCore ul li h3 {                                  /* links "column" header */
+	    font-size:1em;
+    }
+    
+    .leg_Banner .leg_MainTitle {
+        font-size:1.85em;
+    }
+    .leg_Banner .leg_SubTitle {
+        font-size:1.4em;
+    }
+    
+    .leg_OfficeNav input {
+        font-size:0.925em;
+    }
+    
+    .leg_OfficeNav p {
+        padding-top:3px;
+        font-size:0.925em;
+    }
+
+    .leg_OfficeNav li {    
+        padding-right:0%;
+    }
+
+    a.leg_OfficeNavTop, 
+    a.leg_OfficeNavLinkonly {                           /* Linkonly class is for office nav items with no drop-down menu to be shown */
+        font-size:0.925em;
+         padding:4px 10px 10px 3px;                     /* add padding to accommodate smaller font */
+    }
+    
+    a.leg_OfficeNavTop_Hover {         
+        padding:3px 9px 10px 2px;
+    }
+    
+    .leg_OfficeNav select {
+        margin-top:0;
+        margin-right:8px;
+        font-size:0.925em; 
+    }
+    
+    .leg_PageFooter h2 {  
+        font-size:0.9em;
+    }
+}  /* end: @MEDIA for tablets */
+
+
+/* ====================================================== */
+/* Setup mobile-only
+/*      - overrides common css for mobile display
+/*      - requires '.leg_UseMobile' wrapper class
+/*
+/* ====================================================== */
+
+.leg_UseMobile .leg_HiddenMobile {                                     /* elements only displayed in full screen/tablet */
+    display:none;
+    visibility:hidden;
+}
+
+.leg_UseMobile .leg_HiddenNonmobile {                                  /* elements only displayed in mobile */
+    display:inline;
+    visibility:visible;
+}
+    
+.leg_UseMobile .leg_HiddenTablet {                                      /* elements only displayed in full screen */
+    display:none;
+    visibility:hidden;
+}
+    
+.leg_UseMobile .leg_mobile_Accordion {                                 /* mobile-specific accordion nav panel /Content/HouseCSS/templates/graphics */
+    display:block;
+    overflow:hidden;
+    visibility:visible;                
+    font-size:1.2em;
+    margin-right:4px;
+    cursor:pointer;
+    background-image:url(/Content/HouseCSS/templates/graphics/accordion_arrowdown.png);
+    background-position:100% 50%;
+    background-repeat:no-repeat;                  
+}
+    
+.leg_UseMobile a.leg_mobile_Accordion, 
+.leg_UseMobile a.leg_mobile_Accordion:link, 
+.leg_UseMobile a.leg_mobile_Accordion:visited,
+.leg_UseMobile a.leg_mobile_Accordion:hover,
+.leg_UseMobile a.leg_mobile_Accordion:active {
+    text-decoration:none;
+}
+
+.leg_UseMobile .leg_mobile_Accordion_Expanded {
+    background-image:url(/Content/HouseCSS/templates/graphics/accordion_close.png);
+}
+
+.leg_UseMobile .leg_mobile_Newline {                                   /* provide spacing between sections when switching to single column display in mobile */
+    margin-top:24px;
+}
+
+
+/* =========================== Topmost Header =========================== */
+/* mobile-specific */
+    
+.leg_UseMobile .leg_mobile_TopHeader {                                 /* mobile-specifc highest-level heading */
+    display:block;
+    visibility:visible;
+    margin-bottom:8px;
+    font-family:Helvetica,Tahoma,Serif;
+    text-align:center;
+}
+    
+.leg_UseMobile .leg_mobile_MainTitle {
+    background-color:#666633;
+    padding-top:8px;
+    padding-bottom:8px; 
+}    
+.leg_UseMobile .leg_mobile_MainTitle a {
+    color:#ffffff;
+    font-size:1.3em;
+    font-weight:bold;
+    text-decoration:none;
+}
+    
+.leg_UseMobile .leg_mobile_SubTitle {
+    background-color:#FFFEE9;
+    padding-top:4px;
+    padding-bottom:4px;
+    border-bottom:1px solid #666633;
+}
+.leg_UseMobile .leg_mobile_SubTitle a {
+    color:#000000;
+    font-size:1.2em;
+    font-weight:normal;
+    text-decoration:none;        
+}
+
+/* =========================== Page-Level =========================== */
+ 
+.leg_UseMobile body {
+    background-color:#fffff7;
+}
+
+.leg_UseMobile .leg_Shell {                                            /* page content area */
+    width:auto;
+    padding:0 4% 0 4%;
+}
+
+/* =========================== Header: Shared Legislative Navigation =========================== */
+
+.leg_UseMobile .leg_NavItem {
+    float:none;    
+    overflow:hidden;
+}
+
+/* --------------------------- first navigational links --------------------------- */
+/* not shown in mobile */
+    	/*
+	.leg_UseMobile .leg_FirstNav {
+	    display:none;
+	    visibility:hidden;
+	}
+	*/
+
+.leg_UseMobile .leg_ul_FirstNav {
+    display:none;
+    visibility:hidden;
+}
+.leg_UseMobile .leg_FirstNavR {
+  float: left;
+ 
+}
+
+
+
+
+
+/* --------------------------- navigation header --------------------------- */
+/* mobile-specific */
+    
+.leg_UseMobile .leg_mobile_NavHeader {                                 /* generalized header for both legislature-level nav and office-level nav */
+    clear:both;
+    display:block;
+    visibility:visible;
+    position:relative;
+    width:auto;
+    height:auto;                                   
+    background-color:#ffffff;                                         
+    border-top:2px solid #666633;
+    border-right:1px solid #666633;
+    border-bottom:2px solid #666633;               
+    border-left:1px solid #666633;     
+    margin-top:8px;
+    margin-bottom:8px;
+    background-image:url(/Content/HouseCSS/templates/graphics/accordion_arrowdown.png);
+    background-position:97% 50%;
+    background-repeat:no-repeat;
+}
+    
+.leg_UseMobile .leg_mobile_NavHeader h2 {
+    padding:6px 20px 6px 12px;
+    font-size:1.2em;
+    cursor:pointer;
+}
+    
+.leg_UseMobile .leg_mobile_NavHeader_Expanded {                        /* for display of main LegNav or OfficeNav links below nav header */
+    padding-right:4px;
+    padding-bottom:4px;
+    margin-bottom:0;        
+    border-bottom:none;
+    border-bottom-right-radius:0;
+    -moz-border-radius-bottomright:0;
+	-webkit-border-bottom-right-radius:0;
+	border-bottom-left-radius:0;
+	-moz-border-radius-bottomleft:0;
+	-webkit-border-bottom-left-radius:0;
+    box-shadow:none;
+    -moz-box-shadow:none;
+    -webkit-box-shadow:none;
+    background-image:url(/Content/HouseCSS/templates/graphics/accordion_close.png);                 /* swapped with arrow to indicate as collapsable */
+    background-position:97% 40%;
+}
+    
+/* --------------------------- leg navigation - top-level links --------------------------- */
+/* modified for mobile */
+    
+.leg_UseMobile .leg_LegNav {                                            /* wrapper around common legislative navigation links */
+    display:none;                                                       /* display is toggled through navigation handler javascript */
+    background-color:#ffffff;
+    width:auto;  
+    height:auto;                                           
+    padding:0 0 0 5%;                                       
+    border-top:none;
+    border-right:1px solid #666633;
+    border-bottom:1px solid #666633;                   
+    border-left:1px solid #666633;	               
+}
+.leg_UseMobile .leg_mobile_Leglink {
+    border-bottom:1px solid white; 
+}
+.leg_UseMobile .leg_LegNav ul {
+    padding:6px 0 6px 0;
+}
+    
+.leg_UseMobile .leg_LegNav li {
+    margin:0;
+    margin-left:4%;
+    margin-right:2%;
+    padding:6px 0 6px 0;
+    border-bottom:1px solid #E0E0E0;
+}
+.leg_UseMobile .leg_LegNav li:first-child {
+    padding-top:0;
+}
+.leg_UseMobile .leg_LegNav li:last-child {
+    border-style:none;
+}
+
+.leg_UseMobile a.leg_LegNavTop {                                        /* each top-level link */
+    display:block;
+    padding:0;
+    color:#000000;
+    cursor:pointer;
+} 
+    
+/* --------------------------- leg navigation - core links for each body/nav area --------------------------- */
+/* modified for mobile */
+    
+.leg_UseMobile .leg_LegNavCore {
+    display:none;                                                       /* not shown until leg_LegNavTop click */
+    clear:left;
+    float:none;
+    position:static;
+    width:auto;                                       
+    height:auto;
+    color:#000000;
+    background:#ffffff;
+    padding-top:4px;
+    padding-left:8%;      
+    border:none;               
+}
+
+.leg_UseMobile .leg_LegNavCore h2 {                                     /* top-level nav header */
+    display:none;                                                       /* skip "title" to drop-down */
+    padding:0;
+}
+
+.leg_UseMobile .leg_LegNavCore ul {                                     /* links "column" */
+	float:none;
+	width:auto;
+	padding:4px 0 0 0;
+    margin:0;  
+}
+.leg_UseMobile .leg_LegNavCore ul.leg_NavCol2of4, .leg_UseMobile .leg_LegNavCore ul.leg_NavCol1of3 {
+	width:100%;	
+}
+
+.leg_UseMobile .leg_LegNavCore ul li  {                                 /* each link for the body/area */
+	padding:4px 0 4px 0px;
+	border-bottom:none; 
+}
+
+.leg_UseMobile .leg_LegNavCore ul li h3 {                               /* links "column" header */
+	display:block;
+	border:none;
+	padding:6px 0 2px 0;	    	    
+	margin:0;
+}
+
+
+/* =========================== Masthead: body/office location title & /templates/graphics =========================== */
+/* not shown in mobile */
+    
+.leg_UseMobile .leg_Masthead {
+    display:none;
+}
+
+
+/* =========================== Office Nav: contextual & dynamic office links, news alerts, & info =========================== */
+        
+.leg_UseMobile .leg_SocialFB,
+.leg_UseMobile .leg_SocialTwitter,
+.leg_UseMobile .leg_SocialYoutube,
+.leg_UseMobile .leg_SocialEmail,
+.leg_UseMobile .leg_SocialRSS  {                                       /* not shown in mobile */
+    display:none;
+}
+
+.leg_UseMobile .leg_OfficeNav {
+	display:none;                                                       /* display is toggled through navigation handler javascript */
+    background-color:#ffffff;      
+    width:auto;  
+    height:auto;                                           
+    padding:0 0 0 5%;
+    border-top:none;
+    border-right:1px solid #666633;
+    border-bottom:1px solid #666633;              
+    border-left:1px solid #666633;
+    margin-bottom:8px;
+}
+
+.leg_UseMobile .leg_OfficeNav ul {
+    padding:6px 0 6px 0;
+}
+    
+.leg_UseMobile .leg_OfficeNav li {
+    margin:0;
+    margin-left:4%;
+    margin-right:2%;
+    padding:6px 0 6px 0;
+    border-bottom:1px solid #E0E0E0;    
+}
+.leg_UseMobile .leg_OfficeNav li:first-child {
+    padding-top:0;
+}
+.leg_UseMobile .leg_OfficeNav li:last-child {
+    border-style:none;
+}
+
+.leg_UseMobile .leg_OfficeNav select {
+    margin:0;
+}
+
+.leg_UseMobile a.leg_OfficeNavTop {
+    display:block; 
+    padding:0;
+    margin:0;
+    font-size:1.2em;
+    font-weight:bold;
+    background:none;
+    cursor:pointer;
+}
+    
+.leg_UseMobile a.leg_OfficeNavLinkonly {
+    float:none;
+    padding:0;
+    font-size:1.2em;
+    font-weight:bold;
+}
+
+/* ---------------------------OFFICE navigation links - core links for each body/area --------------------------- */
+    
+.leg_UseMobile .leg_OfficeNavCore {
+    display:none;                                       /* display is toggled through navigation handler javascript */
+    float:none;
+    clear:left;
+    position:static;
+    width:auto;                                       
+    height:auto;
+    color:#000000;     
+    background:#ffffff;
+    padding-top:4px;
+    padding-left:8%;
+    margin-left:0;
+    border:none;   
+    z-index:0;
+}
+    
+.leg_UseMobile .leg_OfficeNavCore ul {                                       
+	float:none;
+	width:auto;
+	padding:4px 0 0 0;
+    margin:0;  
+}
+.leg_UseMobile .leg_OfficeNavCore ul.leg_NavCol2of4, 
+.leg_UseMobile .leg_OfficeNavCore ul.leg_NavCol1of3 {
+	width:100%;	
+}
+    
+.leg_UseMobile .leg_OfficeNavCore ul li {
+    padding:4px 0 4px 0px;
+	border-bottom:none; 
+}   
+   
+.leg_UseMobile .leg_OfficeNavCore ul li h4 {                           /* links "column" header */
+	display:block;
+	border:none;
+	padding:6px 0 2px 0;	    	    
+	margin:0;
+}
+   
+
+/* =========================== Body of page: main content =========================== */
+
+.leg_UseMobile .leg_PageContent {
+    padding-top:1em;    
+}
+
+/* --------------------------- Headers --------------------------- */
+
+.leg_UseMobile .leg_PageContent h1 {
+    margin-bottom:0.6em;
+    font-size:1.5em;    
+}
+.leg_UseMobile .leg_PageContent h2 {
+    font-size:1.3em;
+}
+.leg_UseMobile .leg_PageContent h3 {
+    font-size:1.2em;
+}
+
+/* --------------------------- Core elements --------------------------- */
+
+.leg_UseMobile .leg_PageContent p {
+    line-height:1.25em;
+}
+
+/* --------------------------- Columns --------------------------- */
+
+.leg_UseMobile .leg_Col, .leg_UseMobile .leg_ColR {
+    float:none;
+}
+
+.leg_UseMobile .leg_Col1of4, .leg_UseMobile .leg_Col2of4, .leg_UseMobile .leg_Col3of4, 
+.leg_UseMobile .leg_Col1of4-First, .leg_UseMobile .leg_Col2of4-First, .leg_UseMobile .leg_Col3of4-First, 
+.leg_UseMobile .leg_Col1of4-Last, .leg_UseMobile .leg_Col2of4-Last, .leg_UseMobile .leg_Col3of4-Last {
+    float:none;
+    width:auto;
+    padding-left:0;
+    padding-right:0;
+}
+
+.leg_UseMobile .leg_Col1of3, .leg_UseMobile .leg_Col2of3,
+.leg_UseMobile .leg_Col1of3-First, .leg_UseMobile .leg_Col2of3-First,
+.leg_UseMobile .leg_Col1of3-Last, .leg_UseMobile .leg_Col2of3-Last {
+    float:none;
+    width:auto;
+    padding-left:0;
+    padding-right:0;
+}
+
+/* --------------------------- Panes --------------------------- */
+
+.leg_UseMobile .leg_Pane {
+    margin-bottom:1.5em;
+}
+.leg_UseMobile .leg_PaneHeader {
+    color:#000000;
+    background-color:#ffffff;
+    font-size:1.2em;
+}
+
+/* --------------------------- Utilities: formatting --------------------------- */
+
+.leg_UseMobile .leg_PageContent .leg_AlignR,
+.leg_UseMobile .leg_PageFooter .leg_AlignR {
+    text-align:left;
+    padding-bottom:6px;
+}
+
+
+/* =========================== Footer =========================== */
+
+.leg_UseMobile .leg_PageFooter {
+    position:relative;
+    padding:6px 0 0 0;
+    margin:6px 0 0 0;
+    border-top:2px solid #666633;
+    border-right:1px solid #666633;
+    border-left:1px solid #666633;
+}
+
+.leg_UseMobile .leg_PageFooter .leg_Title {
+    text-align:left;
+}
+.leg_UseMobile .leg_PageFooter h2 {
+    font-size:1.05em;
+    padding:6px 12px 6px 12px;
+    border-bottom:none;
+}
+
+.leg_UseMobile .leg_PageFooter ul  {
+    display:none;
+}
+
+.leg_UseMobile .leg_PageFooterAddr {
+    display:none;
+}
+
+
+.HouseSample {
+    margin:1em 2em 1em 2em;
+    padding-left:1em;
+    padding-right:1em;
+    background-color:#F9F9F9;
+    border:1px solid #E8E8E8;
+    border-left:3px solid #949494;
+}
+.HRDSample p {
+    margin-top:1em;
+}
+
+/* =================== CCO =================== */ 
+
+#ccodescriptions{
+	text-align: center;
+
+}
+
+#ccodescriptions table {
+	border: 1px solid black;
+	margin-left:auto; 
+	margin-right:auto;
+	text-align: left;
+}
+
+#ccodescriptions td, #ccodescriptions th 
+{
+font-size:.9em;
+border:1px solid #000;
+padding:7px 7px 7px 7px;
+width: 850px;
+}
+
+
+/* =================== hpis =================== */ 
+
+.HPISPEATUREIMGLEFT {
+    width:auto;
+	align:left;
+
+}
+
+
+.HPISPEATUREIMGLEFT table {
+    position:relative;
+    float:left;
+
+}
+.HPISPEATUREIMGLEFT iframe {
+    position:relative;
+    float:left;
+    margin: 5px 8px 2px 0px;
+}
+
+.HPISPEATUREIMGRIGHT {
+    width:auto;
+
+}
+
+
+.HPISPEATUREIMGRIGHT table {
+        position:relative;
+   	float:right;
+
+}
+
+
+/* =================== member pages =================== */ 
+
+.MEMIMGLEFT {
+    width:auto;
+
+}
+
+
+.MEMIMGLEFT table {
+
+	float:left;
+}
+
+.MEMIMGRIGHT {
+    width:auto;
+
+}
+
+
+.MEMIMGRIGHT table {
+
+	float:right;
+}
+
+
+/* =================== Comments pages =================== */ 
+
+
+
+
+.HouseComments {
+    padding:0.5em 0.75em;
+    margin-top:0.3em;
+    margin-bottom:2em;
+    margin-right: auto;
+    margin-left: 170px; 
+    width: 650px;
+	
+}
+.HouseComments p{
+    margin-top:0.3em;
+    margin-bottom:1em;
+    font-style:inherit;
+
+}
+.HouseCommentsBttn {
+    width: 278px; 
+    font-weight: bold;
+    padding-top:0.5em;
+    Padding-bottom:0.5em;
+
+
+	font-size: 1em;
+	border:1px solid #424211;
+	border-top:2px solid #424211;
+	border-bottom:2px solid #424211;
+
+	    border-top-left-radius:5px;
+	    -moz-border-radius-topleft:5px;
+		-webkit-border-top-left-radius:5px;
+	    border-top-right-radius:5px;
+		-moz-border-radius-topright:5px;
+			-webkit-border-top-right-radius:5px;
+
+	    border-bottom-left-radius:5px;
+	    -moz-border-radius-bottomleft:5px;
+		-webkit-border-bottom-left-radius:5px;
+	    border-bottom-right-radius:5px;
+		-moz-border-radius-bottomright:5px;
+			-webkit-border-bottom-right-radius:5px;
+
+}
+
+/* =========================== MastheadTVPOPUP: body/office location title & /templates/graphics =========================== */
+
+.leg_MastheadTV {                                             /* wrapper for banner and title area */
+    clear:both;
+    height:100px;
+    overflow:hidden;
+    border-left:1px solid #424211;
+    border-right:1px solid #424211; 
+    display:block;
+    box-shadow:inset 0 0 6px 2px #9E9E9E;
+    -moz-box-shadow:inset 0 0 6px 2px #9E9E9E;
+    -webkit-box-shadow:inset 0 0 6px 2px #9E9E9E; 
+}
+
+.leg_BannerTV {
+    height:100%;
+    width:100%;
+    background-image:url(/Content/HouseCSS/templates/graphics/bannertv.png);
+    background-repeat:no-repeat;
+    font-family:georgia,serif;
+    z-index:1;
+}
+.leg_BannerTV a {
+    color:#000000;
+    text-decoration:none;
+}
+.leg_BannerTV a:hover {
+    text-decoration:none;
+}
+.leg_BannerTV .leg_MainTitleTV {
+    font-size: 1.5em;
+    letter-spacing:0.05em;
+    padding:28px 0 14px 230px;
+    display:block;
+    z-index:9;                                              /* place over banner image */
+}
+.leg_BannerTV .leg_SubTitleTV {
+    font-size:.9em;
+    letter-spacing:0.05em;
+    padding:0 0 0 280px;
+    display:block;
+    z-index:9;                                              /* place over banner image */
+}
+
+.leg_BannerTV .leg_MainTitleTV {
+        font-size:1.85em;
+    }
+
+
+.HouseFlyer {
+    width:auto;
+    padding:0.5em 0.75em;
+    margin-top:0.3em;
+    margin-bottom:2em;
+    border:1px solid #949494;
+    border-top:2px solid #666633;
+    border-top-left-radius:5px;
+    -moz-border-radius-topleft:5px;
+	-webkit-border-top-left-radius:5px;
+    border-top-right-radius:5px;
+	-moz-border-radius-topright:5px;
+	-webkit-border-top-right-radius:5px;
+}
+.HouseFlyer + .HouseFlyer {
+    margin-top:0;
+}
+.leg_Pane + .HouseFlyer {
+    margin-top:3em;
+}
+.HouseFlyer h4 {
+    padding-top:0;
+    padding-bottom:0.5em;
+    margin-bottom:0.75em;
+    text-align:center;
+    border-bottom: 1px solid #666633;
+}
+.HouseFlyer ul {
+    margin-left:0.5em;
+    padding-bottom:0.5em;
+}
+.HouseFlyer li {
+    line-height:1em;
+    list-style-type:none;
+    padding-bottom:1em;
+}
+.HouseFlyer li:last-child {
+    padding-bottom:0;
+}
+
+
+.HouseFlyerDisplay a {
+ color: #666633 !important;
+}
+
+
+.HouseFlyerTwitter {
+    width:auto;
+    margin-top:0.3em;
+    margin-bottom:2em;
+    border:1px solid #949494;
+    border-top:2px solid #666633;
+    border-top-left-radius:5px;
+    -moz-border-radius-topleft:5px;
+	-webkit-border-top-left-radius:5px;
+    border-top-right-radius:5px;
+	-moz-border-radius-topright:5px;
+	-webkit-border-top-right-radius:5px;
+}
+
+.HouseFlyerDisplay a {
+ color: #666633 !important;
+}
+
+
+
+
