@@ -1,4 +1,5 @@
 ﻿using House.DataServices.House1.Models;
+using System;
 using System.Collections.Generic;
 
 namespace HouseIntroductions.IntroductionViewModels
@@ -9,10 +10,11 @@ namespace HouseIntroductions.IntroductionViewModels
         //They are found in the reference library.
         private int _lastLinkedJournalPageSessionNumber = 79;
         private int _lastLinkedJournalPageSessionKey = 208;
-        public IEnumerable<JournalSession> Sessions { set; get; }
-        public JournalSession ActiveSession { set; get; }
-        public IEnumerable<JournalFile> Journals { set; get; }
-
+        
+        public IEnumerable<IntroductionSession> Sessions { set; get; }
+        public IntroductionSession ActiveSession { set; get; }
+        public IEnumerable<IntroductionLineItem> IntroductionLineItems { set; get; }
+        
         public int LastLinkedJournalPageSessionNumber
         { 
             get { return _lastLinkedJournalPageSessionNumber; }

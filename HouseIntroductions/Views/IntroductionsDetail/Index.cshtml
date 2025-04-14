@@ -1,0 +1,51 @@
+﻿@model HouseIntroductions.IntroductionViewModels.IntroductionsDetailViewModel
+@using House.DataServices.House1.Models;
+@using System;
+
+@{
+    Layout = "~/Views/Shared/layout.cshtml";
+}
+
+<div class="col-12">
+    <div class="alert alert-warning alert-dismissible fade show" role="alert" id="alert">
+        <strong>Notice!</strong> Minnesota House of Representatives website has recently been updated, if you have any issues
+        please let us know at <a href="mailto:Webmaster@house.mn">Webmaster@house.mn</a>.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+
+    <div class="container">
+        <H2 align="center">INTRODUCTION OF BILLS</H2>
+        @if(Model.All)
+        {
+            <H3 Align="center">All bills introduced this biennium</H3>
+        }
+        else
+        { 
+            <H3 Align="center">@(Model.date.ToString("dddd, MMMM d, yyyy"))</H3>
+        }
+        <hr />
+    </div>
+
+</div>
+
+<div >
+    
+    <P>
+        The following House Files were introduced:
+    </P>
+    @if (Model.Introductions.Count() > 0)
+    {
+        foreach (House.DataServices.House1.Models.Introduction intro in Model.Introductions)
+        {
+            <P><strong> @(intro.AuthorsDisplay) introduced: </strong></P>
+            <P><A href="http://www.revisor.mn.gov/bin/getbill.php?number=@(intro.HouseFile)&version=latest&session=@(Model.session)&session_number=@(Model.session_number)&session_year=@(intro.FirstActionDate.ToString("yyyy"))">@(intro.HouseFileDisplay),</A>
+            @(intro.Title)</P>
+            <P>@(intro.FirstAction)</P>
+        }
+    }
+
+
+</div>  <!-- end column -->
+

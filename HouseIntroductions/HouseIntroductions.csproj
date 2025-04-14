@@ -281,9 +281,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\IntroductionsController.cs" />
+    <Compile Include="Controllers\IntroductionsDetailController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="IntroductionsViewModels\IntroductionsDetailViewModel.cs" />
     <Compile Include="IntroductionsViewModels\IntroductionsViewModel.cs" />
     <Compile Include="IntroductionsViewModels\LayoutViewModel.cs" />
     <Compile Include="Models\ChamberData.cs" />
@@ -441,6 +443,7 @@
     <Content Include="Views\Introductions\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\IntroductionsDetail\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

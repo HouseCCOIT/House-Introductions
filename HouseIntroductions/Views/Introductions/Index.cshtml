@@ -16,65 +16,57 @@
     </div>
     
     <div class="container">
-        <p>
-            The <a href="https://www.house.mn.gov/Journals">Journal of the House</a> is the official legal record of all House floor proceedings.
-            Daily journals are published following the adjournment of each session day.
-            @if (Model.DisplayLegislativeDayDefinition)
-            {
-                <p>
-                    Pursuant to Minnesota Statutes, <a href="https://www.revisor.mn.gov/statutes/cite/3.012">Section 3.012</a>, a legislative day is counted when either house of the legislature
-                    gives any bill a third reading, adopts a rule of procedure or organization, elects a university regent, confirms
-                    a gubernatorial appointment, or votes to override a gubernatorial veto.
-                </p>
-            }
-            
-        </p>
+        
         <hr />
     </div>
-    <div class="alert alert-warning alert-dismissible fade show" id="pageAlert">
-        Unable to find page.
-    </div>
+    
 </div>
 
 <div class="col-sm-12 col-md-8 col-lg-8 pb-3">
     <!-- begin column -->
 
     <h1 class="leg-portal-header">@Model.ActiveSession.HeaderDisplay</h1>
-    <div class="container">
-        <p>
-        <a href="https://public.govdelivery.com/accounts/MNHOUSE/subscriber/new?topic_id=MNHOUSE_4">E-mail notification</a>  - Receive an e-mail when the daily Journal is published.<br />
-        </p>
-    </div>   
-    <ul class="list-unstyled">
-        @if (Model.Journals.Count() > 0)
-        {
-            foreach (House.DataServices.House1.Models.JournalFile journal in Model.Journals)
-            {
-                <li style="display: flex; justify-content: center; align-items: center;">
+    @if (Model.ActiveSession.IsEnabled)
+    {
+        <div class="container">
+            <p>
+                <a href="https://public.govdelivery.com/accounts/MNHOUSE/subscriber/new?topic_id=MNHOUSE_4">E-mail notification</a>  - Receive an e-mail when House Introductions are made available..<br />
+            </p>
+        </div>
+    }
 
-                    @if (journal.IsSubsequentProceedings)
+
+    <ul class="list-unstyled">
+        @if (Model.IntroductionLineItems.Count() > 0)
+        {
+            if(Model.ActiveSession.IsEnabled)
+            { 
+                <li style="display: flex; justify-content: left; align-items: left;">
+                    <a href="/IntroductionsDetail/Index?date=@(DateTime.Now)&session=@(Model.ActiveSession.SessionNumber)&session_number=@(Model.ActiveSession.SessionType)&All=true">All House Bill introductions from current biennium</a>
+                </li>
+            }
+            
+            foreach (House.DataServices.House1.Models.IntroductionLineItem line in Model.IntroductionLineItems)
+            {
+                <li style="display: flex; justify-content: left; align-items: left;">
+
+                    @if (@line.FirstBillNumber == @line.LastBillNumber)
                     {
-                        <div style="display: flex; width: 40%; margin: .25em !important; ">@journal.SubsequentProceedingDisplay</div>
-                        <div style="display: flex; width: 40%; margin: .25em !important; "></div>
+                        <span>House File Numbers @Html.Raw("&nbsp")<a href="/IntroductionsDetail/Index?date=@(line.Date)&session=@(Model.ActiveSession.SessionNumber)&session_number=@(Model.ActiveSession.SessionType)">@line.FirstBillNumber</a>, introduced on @line.Date.ToString("dddd, MMMM d, yyyy")</span>
                     }
                     else
                     {
-                        <div style="display: flex; width: 40%; margin: .25em !important; ">@journal.LegislativeDate.ToString("dddd, MMMM d, yyyy")</div>
-                        <div style="display: flex; width: 30%; margin: .25em; justify-content: right !important; ">@journal.LegislativeDayDisplay</div>
+                        <span>House File Numbers @Html.Raw("&nbsp")<a href="/IntroductionsDetail/Index?date=@(line.Date)&session=@(Model.ActiveSession.SessionNumber)&session_number=@(Model.ActiveSession.SessionType)">@line.FirstBillNumber - @line.LastBillNumber</a>, introduced on @line.Date.ToString("dddd, MMMM d, yyyy")</span>
                     }
 
-                    <div style="display: flex; width: 30%; justify-content: center; margin: .25em !important">
-                        <div style="display: flex; padding: .25em !important "><A href=https://www.house.mn.gov/cco/journals/@Model.ActiveSession.FolderDisplay/@(journal.FileName.Trim()).htm>HTML</A></div>
-                        @if (journal.HasPDF)
-                        {
-                            <div style="display: flex; align-items: center !important">or</div>
-                            <div style="display: inline-block; padding: .25em !important"><A href=https://www.house.mn.gov/cco/journals/@Model.ActiveSession.FolderDisplay/@(journal.FileName.Trim()).pdf>PDF</A></div>
-                        }
 
-                    </div>
+
+                    @if (line.DisplayPDF)
+                    {
+                        @Html.Raw("&nbsp") <a href="http://www.house.mn.gov/ccodoc/intros/@(line.FileName)">PDF</a>
+                    }
 
                 </li>
-                <hr style="width: 88%; text-align: left; margin-left: 0 "/>
             }
         }
     </ul>
@@ -83,25 +75,7 @@
 
 <div class="col-sm-12 col-md-4 col-lg-4">
     <!-- begin column -->
-    <div class="card text-center calendar mb-3">
-        <div class="card-body text-house p-2">
-
-            <h3 class="mb-0"><a href="https://www.leg.mn.gov/search?searchsite=housejournal&years=@Model.ActiveSession.StartSessionYear-@Model.ActiveSession.EndSessionYear" style="color: #666633;">Search the Journal of the House</a></h3>
-        </div>
-    </div>
-    @*We do not have any links to documents before the linked journal page session number. So we cannot search for them.*@
-    @if (Model.ActiveSession.SessionNumber > Model.LastLinkedJournalPageSessionNumber)
-    {
-        <div class="card text-center calendar mb-3">
-            <h7 class="card-title text-house bg-light p-2">Go to a specific page in the @Model.ActiveSession.StartSessionYear - @Model.ActiveSession.EndSessionYear Journals</h7>
-            <div class="card-body">
-                <b>Page #</b>
-                <INPUT TYPE="text" id=pageNumberumber NAME="pageNumberumber" SIZE=6 MAXLENGTH=6>
-                <INPUT TYPE="reset" VALUE="Clear" id=resetPageSearch name=resetPageSearch>
-                <INPUT TYPE="submit" VALUE="Go to Page" id=submitPageSearch name=submitPageSearch>
-            </div>
-        </div>
-    }
+    
     <div class="card calendar mb-3">
         <h3 class="card-title text-house text-center bg-light p-2">Other Legislative Sessions</h3>
         <div class="card-body">
@@ -109,10 +83,10 @@
             <ul class="list-unstyled">
                 @if (Model.Sessions.Count() > 0)
                 {
-                    foreach (House.DataServices.House1.Models.JournalSession journalSession in Model.Sessions)
+                    foreach (House.DataServices.House1.Models.IntroductionSession session in Model.Sessions)
                     {
                         <li>
-                            <a href="/Journals/Index/@(journalSession.SessionKey)">@journalSession.SessionDisplay</a>
+                            <a href="/Introductions/Index/@(session.SessionKey)">@session.SessionDisplay</a>
                         </li>
                     }
                 }
@@ -127,40 +101,7 @@
             var Win = window.open(url, "openScript", 'width=' + width + ',height=' + height +
                 ',resizable=0,scrollbars=1,menubar=1,status=no');
         }
-        $(document).ready(function () {
-
-            $("#pageAlert").hide();
-
-            $("#resetPageSearch").click(function () {
-                $("#pageAlert").hide();
-                $("#pageNumberumber").val('');
-            });
-
-            $("#submitPageSearch").click(function () {
-                $("#pageAlert").hide();
-                var fileData = {
-                    SessionKey: @Model.ActiveSession.SessionKey,
-                    PageNumber: $("#pageNumberumber").val()
-                }
-
-                $.ajax({
-                    url: '@Url.Action("GetPage", "Journals")',
-                    type: 'post',
-                    dataType: 'json',
-                    contentType: "application/json; charset=utf-8",
-                    success: function (result) {
-                        window.location.href = "https://www.house.mn.gov/cco/journals/" + result.folder + "/" + result.fileName + ".htm#" + $("#pageNumberumber").val();
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        var msg = "<strong>Error:</strong> Unable to find page number " + fileData.PageNumber;
-                        $("#pageAlert").html(msg);
-                        $("#pageAlert").show();
-                    },
-                    data: JSON.stringify(fileData)
-                });
-
-            });
-        });
+        
 
 
     </SCRIPT>

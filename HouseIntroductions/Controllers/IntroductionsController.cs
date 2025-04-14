@@ -10,14 +10,14 @@ namespace HouseIntroductions.Controllers
     {
         private House1Context _context = new House1Context();
 
-        private int _LastArchivedSessionKey = 208;
-        private int _DisplayLegislativeDaySession = 302;
+
         [UserIntranetCheck]
         public ActionResult Index()
         {
-            ViewBag.Message = "Journals page.";
+            ViewBag.Message = "Introductions page.";
             int SessionKey = 0;
             var journalData = new JournalService(_context);
+            var introductionData = new IntroductionService(_context);
 
             //Get the session key from the URL. If none is provided, use the current session.
             if (RouteData.Values.Count > 2)
@@ -41,18 +41,12 @@ namespace HouseIntroductions.Controllers
             var ViewModel = new IntroductionViewModels.IntroductionsViewModel();
 
             // Set values for ViewModel objects.
-            ViewModel.ActiveSession = journalData.GetActiveSession(SessionKey);
-            ViewModel.DisplayLegislativeDayDefinition = (SessionKey == _DisplayLegislativeDaySession);
-            //We do not link to journal pages for sessions before the 79th legislative session.
-            //They are found in the reference library.
-            if (SessionKey < ViewModel.LastLinkedJournalPageSessionKey)
-            {
-                return Redirect(string.Format("https://www.lrl.mn.gov/history/journals/journals?body=house&sess={0}",ViewModel.ActiveSession.SessionNumber));
-            }
+            ViewModel.ActiveSession = introductionData.GetActiveSession(SessionKey);
+            
 
             //Get the session and journal info
-            ViewModel.Sessions = journalData.GetJournalSessionList();
-            ViewModel.Journals = journalData.GetJournalFiles(SessionKey);
+            ViewModel.Sessions = introductionData.GetIntroductionSessionList();
+            ViewModel.IntroductionLineItems = introductionData.GetIntroductionLineItems(SessionKey);
             return View(ViewModel);
         }
 
