@@ -12,29 +12,29 @@ namespace HouseIntroductions
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "JournalIndex",
+                name: "IntroductionIndex",
                 url: "Index/{id}",
-                defaults: new { controller = "Journals", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Introductions", action = "Index", id = UrlParameter.Optional }
             );
 
             routes.MapRoute(
-                name: "JournalHome",
-                url: "Journals",
-                defaults: new { controller = "Journals", action = "Index", id = UrlParameter.Optional }
+                name: "IntroductionHome",
+                url: "Introductions",
+                defaults: new { controller = "Introductions", action = "Index", id = UrlParameter.Optional }
             );
 
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Journals", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Introductions", action = "Index", id = UrlParameter.Optional }
             );
 
             
 
             routes.MapRoute(
-                name: "JournalFiles",
-                url: "Journals/{id}",
-                defaults: new { controller = "Journals", action = "Index", id = UrlParameter.Optional }
+                name: "IntroductionFiles",
+                url: "Introductions/{id}",
+                defaults: new { controller = "Introductions", action = "Index", id = UrlParameter.Optional }
             );
 
             
