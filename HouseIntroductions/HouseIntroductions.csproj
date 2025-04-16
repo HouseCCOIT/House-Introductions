@@ -399,7 +399,7 @@
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <None Include="Properties\PublishProfiles\Introductions.pubxml" />
+    <None Include="Properties\PublishProfiles\Introductions Public - Itasca Server.pubxml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
@@ -457,10 +457,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\JS\highslide\graphics\outlines\Outlines.psd" />
-    <None Include="Properties\PublishProfiles\House Home - Itasca Server.pubxml" />
     <None Include="Properties\PublishProfiles\Itasca Public Test - Net45.pubxml" />
     <None Include="Properties\PublishProfiles\Mike Speiker profile.pubxml" />
-    <None Include="Properties\PublishProfiles\Public Root - Como Server.pubxml" />
     <Content Include="Views\Shared\Layout.cshtml" />
     <None Include="Properties\PublishProfiles\Test - 156.98.238.pubxml" />
     <Content Include="Scripts\jquery-3.7.1.slim.min.map" />
